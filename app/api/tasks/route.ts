@@ -7,11 +7,22 @@ export async function GET(request: NextRequest) {
   const userId = getUserId(request, responseHeaders)
 
   const status = request.nextUrl.searchParams.get('status') || 'inbox'
-  const { rows } = await sql`
-    SELECT * FROM tasks
-    WHERE user_id = ${userId} AND status = ${status}
-    ORDER BY created_at ASC
-  `
+  const date = request.nextUrl.searchParams.get('date') // YYYY-MM-DD
+
+  let rows
+  if (date) {
+    ;({ rows } = await sql`
+      SELECT * FROM tasks
+      WHERE user_id = ${userId} AND scheduled_date = ${date}
+      ORDER BY scheduled_start ASC NULLS LAST, created_at ASC
+    `)
+  } else {
+    ;({ rows } = await sql`
+      SELECT * FROM tasks
+      WHERE user_id = ${userId} AND status = ${status}
+      ORDER BY created_at ASC
+    `)
+  }
 
   const response = NextResponse.json({ tasks: rows })
   responseHeaders.forEach((value, key) => {

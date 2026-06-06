@@ -8,11 +8,16 @@ export async function PATCH(
 ) {
   const responseHeaders = new Headers()
   const userId = getUserId(request, responseHeaders)
-  const { status } = await request.json()
+  const body = await request.json()
   const { id } = await params
+  const { status, scheduled_date, scheduled_start, scheduled_end } = body
 
   await sql`
-    UPDATE tasks SET status = ${status}
+    UPDATE tasks SET
+      status = COALESCE(${status ?? null}, status),
+      scheduled_date = COALESCE(${scheduled_date ?? null}::date, scheduled_date),
+      scheduled_start = COALESCE(${scheduled_start ?? null}::timestamptz, scheduled_start),
+      scheduled_end = COALESCE(${scheduled_end ?? null}::timestamptz, scheduled_end)
     WHERE id = ${id} AND user_id = ${userId}
   `
 

@@ -12,9 +12,10 @@ interface TaskCardProps {
   task: Task
   onAddToday: (id: string) => void
   onDelete: (id: string) => void
+  scheduling?: boolean
 }
 
-export default function TaskCard({ task, onAddToday, onDelete }: TaskCardProps) {
+export default function TaskCard({ task, onAddToday, onDelete, scheduling }: TaskCardProps) {
   const deadline = task.deadline
     ? new Date(task.deadline).toLocaleDateString('en-US', {
         month: 'short',
@@ -45,9 +46,11 @@ export default function TaskCard({ task, onAddToday, onDelete }: TaskCardProps) 
       <div className="flex gap-3">
         <button
           onClick={() => onAddToday(task.id)}
-          className="flex-1 py-2.5 bg-indigo-500 hover:bg-indigo-400 text-white rounded-xl font-medium text-sm active:scale-95 transition-transform"
+          className={`flex-1 py-2.5 text-white rounded-xl font-medium text-sm active:scale-95 transition-all ${
+            scheduling ? 'bg-indigo-700' : 'bg-indigo-500 hover:bg-indigo-400'
+          }`}
         >
-          Add to Today
+          {scheduling ? 'Pick a day ↓' : 'Schedule'}
         </button>
         <button
           onClick={() => onDelete(task.id)}

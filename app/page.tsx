@@ -27,7 +27,7 @@ export default function CapturePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#111] flex flex-col px-4 py-8 max-w-lg mx-auto">
+    <main className="min-h-screen bg-[#111] flex flex-col px-5 pt-14 pb-8 w-full">
       <h1 className="text-2xl font-bold text-white mb-2">Brain Dump</h1>
       <p className="text-gray-400 text-sm mb-6">
         Dump everything on your mind. AI will sort it out.

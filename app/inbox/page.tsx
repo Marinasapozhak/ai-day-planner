@@ -38,7 +38,7 @@ export default function InboxPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#111] flex flex-col px-4 py-8 max-w-lg mx-auto">
+    <main className="min-h-screen bg-[#111] flex flex-col px-5 pt-14 pb-8 w-full">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Inbox</h1>
         <Link href="/" className="text-indigo-400 text-sm">
